@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎂 Chúc Mừng Sinh Nhật My Fèn 🎉</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      min-height: 100vh; /* cho phép cuộn nếu nội dung dài */
+      overflow-x: hidden; /* ẩn tràn ngang */
+      font-family: 'Poppins', sans-serif;
+      color: #fff;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 3em;
+      margin-top: 80px;
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #fff, 0 0 20px #ff4081, 0 0 30px #ff80ab; }
+      to { text-shadow: 0 0 20px #fff, 0 0 40px #ff4081, 0 0 60px #ff80ab; }
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      backdrop-filter: blur(8px);
+      width: 80%;
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 30px;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    p {
+      font-size: 1.2em;
+      line-height: 1.8em;
+      margin-bottom: 20px;
+    }
+
+    .btn {
+      background: #fff;
+      color: #ff4081;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 30px;
+      font-size: 1.1em;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background: #ff4081;
+      color: #fff;
+      transform: scale(1.05);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    /* Ảnh xuất hiện với hiệu ứng */
+    img {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      margin-top: 20px;
+      border: 4px solid #fff;
+      box-shadow: 0 0 15px rgba(255,255,255,0.6);
+      opacity: 0;
+      transform: scale(0.7) rotate(-5deg);
+      animation: popIn 1.5s ease forwards, spin 10s linear infinite;
+    }
+
+    @keyframes popIn {
+      to {
+        opacity: 1;
+        transform: scale(1) rotate(0);
+      }
+    }
+
+    @keyframes spin {
+      0% { transform: scale(1) rotate(0deg); }
+      100% { transform: scale(1) rotate(360deg); }
+    }
+
+    /* Hiệu ứng pháo hoa */
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="fireworks"></canvas>
+
+  <h1>🎉 Chúc Mừng Sinh Nhật My Fèn 🎂</h1>
+
+  <div class="card" id="card">
+    <p>Hôm nay là một ngày cực kỳ đặc biệt... 🌸</p>
+    <p>Ngày mà một người khiến tao cx cx  quý, cx cx muốn “bào xiền” , ae chí cốt ra đời 😎</p>
+    <button class="btn" onclick="showMessage()">Bấm để xem điều bất ngờ 🎁</button>
+  </div>
+
+  <div class="card hidden" id="message">
+    <p><strong>Gửi đến bạn HẢI ĐENG 🎂</strong></p>
+    <img src="z7093994520887_b74cbf1ae680f6321acbee2d51d1cf01.jpg" alt="Ảnh bạn thân">
+    <p><strong>Happy birthday bạn thân ai lấy lo nha má 🎉</strong></p>
+    <p>
+      Chúc mày năm nay học hành phất như gió, pass môn ầm ầm, ví dày lên từng ngày 💸  
+      ( nhớ là đừng quên bạn lúc giàu— bạn là bạn quý mầy lắm đấy !!!  )
+    </p>
+    <p>
+      Giữ nguyên độ mặn, pha thêm tí ngọt, sống chill chill và vui vẻ nha 😆👀  
+      Vụ trà sữa, phim phủng thì... t đợi m ới mời t vs Nọc 😉🧋🍰  
+    </p>
+    <p><em>Happy Birthday Fèn, ship bánh sn cho t nhá :v  ✨</em></p>
+  </div>
+
+  <script>
+    function showMessage() {
+      document.getElementById("card").classList.add("hidden");
+      document.getElementById("message").classList.remove("hidden");
+      launchFireworks();
+    }
+
+    // Pháo hoa đơn giản 🎆
+    const canvas = document.getElementById('fireworks');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    function random(min, max) {
+      return Math.random() * (max - min) + min;
+    }
+
+    function createParticle(x, y) {
+      const count = 100;
+      for (let i = 0; i < count; i++) {
+        particles.push({
+          x: x,
+          y: y,
+          radius: random(1, 3),
+          color: `hsl(${random(0, 360)}, 100%, 70%)`,
+          speedX: random(-5, 5),
+          speedY: random(-5, 5),
+          life: 100
+        });
+      }
+    }
+
+    function drawParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach((p, i) => {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.fill();
+        p.x += p.speedX;
+        p.y += p.speedY;
+        p.life--;
+        if (p.life <= 0) particles.splice(i, 1);
+      });
+      requestAnimationFrame(drawParticles);
+    }
+
+    function launchFireworks() {
+      setInterval(() => {
+        createParticle(random(0, canvas.width), random(0, canvas.height / 2));
+      }, 500);
+      drawParticles();
+    }
+
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+  </script>
+</body>
+</html>
